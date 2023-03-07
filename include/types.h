@@ -4,8 +4,8 @@
 
 #define mapWidth 24
 #define mapHeight 24
-#define screenWidth 576
-#define screenHeight 576
+#define screenWidth 640
+#define screenHeight 480
 
 typedef struct s_tframe
 {
@@ -38,6 +38,7 @@ typedef struct s_vector
 typedef struct s_pl
 {
 	t_point		pos_p;
+	
 	t_vector	vec;
 	double		planeX;
 	double		planeY;
@@ -54,6 +55,7 @@ typedef struct s_vars
 	void		*win;
 	t_img		imgs;
 	t_pl		player;
+	
 	t_tframe	times;
 	int			map[mapWidth][mapHeight];
 } t_vars;

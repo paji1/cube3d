@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 13:15:09 by tel-mouh          #+#    #+#             */
-/*   Updated: 2023/02/15 20:57:33 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/03/07 06:21:10 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@
 */
 static void init_player_time(t_pl *player, t_tframe *time)
 {
-	player->vec.angle = (PI / 50);
+	player->vec.angle = (PI / 14);
 	player->vec.cangle = -1 * player->vec.angle;
 	player->vec.prec.ang_cos = cos(player->vec.angle);
 	player->vec.prec.ang_sin = sin(player->vec.angle);
 	player->vec.cprec.ang_cos = cos(player->vec.cangle);
 	player->vec.cprec.ang_sin = sin(player->vec.cangle);
-	player->pos_p.x = 240;
-	player->pos_p.y = 120;
-	player->vec.dx = 0;
-	player->vec.dy = 1;
+	player->pos_p.x = 10;
+	player->pos_p.y = 9;
+	player->vec.dx = 1;
+	player->vec.dy = 0;
 	player->planeX = 0;
 	player->planeY = 0.66;
 	time->time = 0;
@@ -65,7 +65,7 @@ int init(t_vars *_vars)
 			{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 			{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 			{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			{1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+			{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 			{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 			{1, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 			{1, 4, 0, 4, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -82,7 +82,7 @@ int init(t_vars *_vars)
 	init_img(_vars);
 	if (!_vars->mlx)
 		return (perror("init of mlx faild"), -1);
-	_vars->win = mlx_new_window(_vars->mlx, screenWidth, screenHeight, "Test");
+	_vars->win = mlx_new_window(_vars->mlx, screenWidth * 2, screenHeight, "Test");
 	if (!_vars->mlx)
 		return (perror("init of mlx window faild"), -2);
 	memcpy(_vars->map, copy_map, sizeof(copy_map));

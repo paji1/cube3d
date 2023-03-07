@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 18:16:23 by tel-mouh          #+#    #+#             */
-/*   Updated: 2023/02/14 15:10:02 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/03/07 06:10:26 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void draw_wall(t_vars *vars)
 		j = -1;
 		while (++j < 24)
 		{
-			if (vars->map[i][j] == 1)
-			mlx_put_image_to_window(vars->mlx, vars->win, vars->imgs.wall, i* (screenWidth / 24), j* (screenHeight / 24));
+			if (vars->map[i][j] >= 1)
+			mlx_put_image_to_window(vars->mlx, vars->win, vars->imgs.wall, i* (screenWidth / 24) + screenWidth, j* (screenHeight / 24));
 		}
 				
 	}

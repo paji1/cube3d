@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 18:01:53 by tel-mouh          #+#    #+#             */
-/*   Updated: 2023/02/14 15:34:03 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/03/07 04:37:34 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void rotate_vector(t_vars *vars, t_vector *a, double teta)
 {
 	t_vector sum;
 
-	(void)vars;
 	if (teta == 1)
 	{
 		sum.dx = (a->dx * vars->player.vec.prec.ang_cos) - (a->dy * vars->player.vec.prec.ang_sin);
@@ -69,6 +68,7 @@ t_vector rotate_vector_byteta(t_vars *vars, t_vector *a, double teta)
 	}
 	return sum;
 }
+
 
 t_vector add_vector(t_vector a, t_vector b)
 {
