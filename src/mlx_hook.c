@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 15:57:15 by tel-mouh          #+#    #+#             */
-/*   Updated: 2023/03/07 06:45:52 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/03/07 07:38:30 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void draw_ray(t_vars *vars);
 int key_handle(int keycode, t_vars *vars)
 {
 	mlx_clear_window(vars->mlx, vars->win);
-	if (keycode == RIGHT)
+	if (keycode == LEFT)
 		rotate_vector(vars, &vars->player.vec, 1);
-	else if (keycode == LEFT)
+	else if (keycode == RIGHT)
 		rotate_vector(vars, &vars->player.vec, -1);
 	else if (keycode == UP)
 	{

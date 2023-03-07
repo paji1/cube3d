@@ -6,13 +6,13 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 16:39:03 by tel-mouh          #+#    #+#             */
-/*   Updated: 2023/03/07 06:49:05 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/03/07 08:24:37 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Cube3d.h"
 
-int rgbcolor(int red , int green, int blue)
+int rgbcolor(int red, int green, int blue)
 {
 	return red << 16 | green << 8 | blue;
 }
@@ -35,13 +35,12 @@ t_vector rotate_vector_s(t_vector *a, double teta)
 }
 void DDA_ver(int X, int start, int end, t_vars *vars, int color)
 {
-	
 
-    for (int i = start; i <= end; i++) {
-        mlx_pixel_put(vars->mlx, vars->win, X, i,  color); // put pixel at (X,Y)
-    }
+	for (int i = start; i <= end; i++)
+	{
+		mlx_pixel_put(vars->mlx, vars->win, X, i, color); // put pixel at (X,Y)
+	}
 }
- 
 
 void DDA(int X0, int Y0, double m, t_vector *vec, t_vars *vars)
 {
@@ -82,15 +81,36 @@ void DDA(int X0, int Y0, double m, t_vector *vec, t_vars *vars)
 		DDA(round(X), round(Y), 10, &a, vars);
 	}
 }
+void fill_image_with_color(void *img_ptr, int color, int width, int height)
+{
+	int a;
+	char *img_data = mlx_get_data_addr(img_ptr, &a, &a, &a);
+	int bpp = 32;					// bits per pixel
+	int row_size = bpp * width / 8; // size of one row in bytes
+	int x, y;
+
+	for (y = 0; y < height; y++)
+	{
+		for (x = 0; x < width; x++)
+		{
+			int offset = y * row_size + x * (bpp / 8);
+			img_data[offset] = (color >> 16) & 0xFF;	// red component
+			img_data[offset + 1] = (color >> 8) & 0xFF; // green component
+			img_data[offset + 2] = color & 0xFF;		// blue component
+		}
+	}
+}
 
 void draw_ray(t_vars *vars)
 {
 	int x = -1;
-	double perpWallDist;
-	int l = 0;
-	int r = 0;
+	int imagex = 0;
+	int imagey = 0;
+	int starty = 0;
+	int color = 0;
 	while (++x < screenWidth)
 	{
+		double perpWallDist;
 		// calculate ray position and direction
 		double cameraX = 2 * x / (double)screenWidth - 1; // x-coordinate in camera space
 		double rayDirX = vars->player.vec.dx + vars->player.planeX * cameraX;
@@ -175,38 +195,60 @@ void draw_ray(t_vars *vars)
 			}
 			// printf("end\n");
 		}
-		
+
 		if (side == 0)
 			perpWallDist = (sideDistX - deltaDistX);
 		else
 			perpWallDist = (sideDistY - deltaDistY);
-		
-		// printf("perpWallDist= %f\n", perpWallDist);
+
 		int lineHeight = (int)(screenHeight / perpWallDist);
 
-      	//calculate lowest and highest pixel to fill in current stripe
-		int drawStart = -lineHeight / 2 +screenHeight / 2;
-		if(drawStart < 0) drawStart = 0;
+		// calculate lowest and highest pixel to fill in current stripe
+		int drawStart = -lineHeight / 2 + screenHeight / 2;
+		if (drawStart < 0)
+			drawStart = 0;
 		int drawEnd = lineHeight / 2 + screenHeight / 2;
-		if(drawEnd >= screenHeight) drawEnd = screenHeight - 1;
+		if (drawEnd >= screenHeight)
+			drawEnd = screenHeight - 1;
 
-		if (l == 0)
-		l = drawEnd;
-		if (l != drawEnd)
+		if (imagey == 0)
 		{
-			l = drawEnd;
-			r++;
+			imagex = x;
+			imagey = drawEnd - drawStart + 1;
+			starty = drawStart;
 		}
-		int color = 0;
-      	switch(vars->map[mapX][mapY])
-      {
-        case 1:  color = rgbcolor(143, 0 ,1);    break; //red
-        case 2:  color = rgbcolor(143, 174 ,1);  break; //green
-        case 3:  color = rgbcolor(143, 174 ,234);   break; //blue
-        case 4:  color = rgbcolor(255, 255 ,255);  break; //white
-        default: color = rgbcolor(158, 0 ,141); break; //yellow
-      	}
-		DDA_ver(x, drawStart, drawEnd, vars, color);
+		if (imagey != drawEnd - drawStart + 1 || (x + 1) == screenWidth)
+		{
+			// printf("drawStart= %d\n", drawStart);
+			// printf("drawEnd= %d\n", drawEnd);
+			// printf("imgex= %d\n", imagex);
+			color++;
+			switch (color %  5)
+			{
+			case 1:
+				color = rgbcolor(143, 0, 1);
+				break; // red
+			case 2:
+				color = rgbcolor(143, 174, 1);
+				break; // green
+			case 3:
+				color = rgbcolor(143, 174, 234);
+				break; // blue
+			case 4:
+				color = rgbcolor(255, 255, 255);
+				break; // white
+			default:
+				color = rgbcolor(158, 0, 141);
+				break; // yellow
+			}
+			void *img = mlx_new_image(vars->mlx, x - imagex + 1, imagey);
+			fill_image_with_color(img, color, x - imagex + 1, imagey);
+			mlx_put_image_to_window(vars->mlx, vars->win, img, imagex, starty);
+			imagex = x;
+			imagey = drawEnd - drawStart + 1;
+			starty = drawStart;
+		}
+		// DDA_ver(x, drawStart, drawEnd, vars, color);
 	}
 	// DDA(vars->player.pos_p.x * 24 + screenWidth, vars->player.pos_p.y * 24, 40, &vars->player.vec, vars);
 }

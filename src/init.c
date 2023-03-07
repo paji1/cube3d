@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 13:15:09 by tel-mouh          #+#    #+#             */
-/*   Updated: 2023/03/07 06:21:10 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/03/07 07:36:37 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 */
 static void init_player_time(t_pl *player, t_tframe *time)
 {
-	player->vec.angle = (PI / 14);
+	player->vec.angle = (PI / 23);
 	player->vec.cangle = -1 * player->vec.angle;
 	player->vec.prec.ang_cos = cos(player->vec.angle);
 	player->vec.prec.ang_sin = sin(player->vec.angle);
@@ -82,7 +82,7 @@ int init(t_vars *_vars)
 	init_img(_vars);
 	if (!_vars->mlx)
 		return (perror("init of mlx faild"), -1);
-	_vars->win = mlx_new_window(_vars->mlx, screenWidth * 2, screenHeight, "Test");
+	_vars->win = mlx_new_window(_vars->mlx, screenWidth, screenHeight, "Test");
 	if (!_vars->mlx)
 		return (perror("init of mlx window faild"), -2);
 	memcpy(_vars->map, copy_map, sizeof(copy_map));

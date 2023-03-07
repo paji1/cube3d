@@ -6,7 +6,7 @@
 #    By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 04:31:34 by tel-mouh          #+#    #+#              #
-#    Updated: 2023/02/14 14:01:33 by tel-mouh         ###   ########.fr        #
+#    Updated: 2023/03/07 08:12:42 by tel-mouh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ UHEADERS := $(addprefix include/, $(UHEADERS))
 RM = rm -rf
 CC = gcc
 HEADERSFLAGS = -I include
-CFLAG =   -Wall -Werror -Wextra $(HEADERSFLAGS)
+CFLAG =   $(HEADERSFLAGS)
 
 # ################SRCS_Objs##########################
 
