@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 16:39:03 by tel-mouh          #+#    #+#             */
-/*   Updated: 2023/03/07 08:24:37 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/03/08 06:32:58 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,13 +101,13 @@ void fill_image_with_color(void *img_ptr, int color, int width, int height)
 	}
 }
 
-void draw_ray(t_vars *vars)
+int draw_ray(t_vars *vars)
 {
 	int x = -1;
 	int imagex = 0;
 	int imagey = 0;
 	int starty = 0;
-	int color = 0;
+	
 	while (++x < screenWidth)
 	{
 		double perpWallDist;
@@ -217,13 +217,8 @@ void draw_ray(t_vars *vars)
 			imagey = drawEnd - drawStart + 1;
 			starty = drawStart;
 		}
-		if (imagey != drawEnd - drawStart + 1 || (x + 1) == screenWidth)
-		{
-			// printf("drawStart= %d\n", drawStart);
-			// printf("drawEnd= %d\n", drawEnd);
-			// printf("imgex= %d\n", imagex);
-			color++;
-			switch (color %  5)
+		int color = 0;
+			switch (vars->map[mapX][mapY])
 			{
 			case 1:
 				color = rgbcolor(143, 0, 1);
@@ -241,12 +236,23 @@ void draw_ray(t_vars *vars)
 				color = rgbcolor(158, 0, 141);
 				break; // yellow
 			}
+			if (side == 1) 
+			{
+					color /= 10;	
+			}
+		if (imagey != drawEnd - drawStart + 1 || (x + 1) == screenWidth)
+		{
+			// printf("drawStart= %d\n", drawStart);
+			// printf("drawEnd= %d\n", drawEnd);
+			// printf("imgex= %d\n", imagex);
+			
 			void *img = mlx_new_image(vars->mlx, x - imagex + 1, imagey);
-			fill_image_with_color(img, color, x - imagex + 1, imagey);
+			fill_image_with_color(img, rgbcolor(158, 0, color), x - imagex + 1, imagey);
 			mlx_put_image_to_window(vars->mlx, vars->win, img, imagex, starty);
 			imagex = x;
 			imagey = drawEnd - drawStart + 1;
 			starty = drawStart;
+			mlx_destroy_image(vars->mlx, img);
 		}
 		// DDA_ver(x, drawStart, drawEnd, vars, color);
 	}

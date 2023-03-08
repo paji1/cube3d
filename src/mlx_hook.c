@@ -6,14 +6,14 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 15:57:15 by tel-mouh          #+#    #+#             */
-/*   Updated: 2023/03/07 07:38:30 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/03/08 06:26:24 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Cube3d.h"
 
 
-void draw_ray(t_vars *vars);
+int draw_ray(t_vars *vars);
 
 # define RIGHT 65363
 # define LEFT 65361
@@ -47,8 +47,8 @@ int key_handle(int keycode, t_vars *vars)
 		
 	}
 	// draw_wall(vars);
-	draw_ray(vars);
 	(void)vars;
+	
 	return 0;
 }
 void game_hooks(t_vars *vars)
@@ -56,6 +56,7 @@ void game_hooks(t_vars *vars)
 	mlx_hook(vars->win, 2, 1L << 0, key_handle, vars);
 	mlx_hook(vars->win, 17, 0, exit_game, vars);
 	// draw_wall(vars);
-	draw_ray(vars);
+	mlx_loop_hook(vars->mlx, 	draw_ray, vars);
+
 	mlx_loop(vars->mlx);
 }

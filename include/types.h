@@ -4,9 +4,14 @@
 
 #define mapWidth 24
 #define mapHeight 24
-#define screenWidth 640
-#define screenHeight 480
+#define screenWidth 1280
+#define screenHeight 960
 
+typedef struct s_speed
+{
+	double move;
+    double rotation;
+} t_speed;
 typedef struct s_tframe
 {
 	double time;
@@ -57,6 +62,7 @@ typedef struct s_vars
 	t_pl		player;
 	
 	t_tframe	times;
+	t_speed		speed;
 	int			map[mapWidth][mapHeight];
 } t_vars;
 #endif

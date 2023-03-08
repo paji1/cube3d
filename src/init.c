@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 13:15:09 by tel-mouh          #+#    #+#             */
-/*   Updated: 2023/03/07 07:36:37 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/03/08 06:17:57 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,22 @@
  * @param  structs playr and time inside t_vars
  * @return void
 */
-static void init_player_time(t_pl *player, t_tframe *time)
+static void init_var_game(t_vars *vars)
 {
-	player->vec.angle = (PI / 23);
-	player->vec.cangle = -1 * player->vec.angle;
-	player->vec.prec.ang_cos = cos(player->vec.angle);
-	player->vec.prec.ang_sin = sin(player->vec.angle);
-	player->vec.cprec.ang_cos = cos(player->vec.cangle);
-	player->vec.cprec.ang_sin = sin(player->vec.cangle);
-	player->pos_p.x = 10;
-	player->pos_p.y = 9;
-	player->vec.dx = 1;
-	player->vec.dy = 0;
-	player->planeX = 0;
-	player->planeY = 0.66;
-	time->time = 0;
-	time->oldtime = 0;
+	vars->player.vec.angle = (PI / 23);
+	vars->player.vec.cangle = -1 * vars->player.vec.angle;
+	vars->player.vec.prec.ang_cos = cos(vars->player.vec.angle);
+	vars->player.vec.prec.ang_sin = sin(vars->player.vec.angle);
+	vars->player.vec.cprec.ang_cos = cos(vars->player.vec.cangle);
+	vars->player.vec.cprec.ang_sin = sin(vars->player.vec.cangle);
+	vars->player.pos_p.x = 10;
+	vars->player.pos_p.y = 9;
+	vars->player.vec.dx = 1;
+	vars->player.vec.dy = 0;
+	vars->player.planeX = 0;
+	vars->player.planeY = 0.66;
+	vars->times.time = 0;
+	vars->times.oldtime = 0;
 }
 
 void init_img(t_vars *vars)
@@ -86,6 +86,6 @@ int init(t_vars *_vars)
 	if (!_vars->mlx)
 		return (perror("init of mlx window faild"), -2);
 	memcpy(_vars->map, copy_map, sizeof(copy_map));
-	init_player_time(&_vars->player, &_vars->times);
+	init_var_game(_vars);
 	return (0);
 }
